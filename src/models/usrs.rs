@@ -1,5 +1,5 @@
 use std::time::SystemTime;
-use super::schema::usrs;
+use crate::schema::usrs;
 
 #[derive(Queryable)]
 pub struct Usr {
@@ -7,7 +7,8 @@ pub struct Usr {
     pub name : String,
     pub created_at : SystemTime,
     pub updated_at : SystemTime,
-    pub active : bool
+    pub active : bool,
+    pub hash_psw: String,
 }
 
 #[derive(Insertable)]

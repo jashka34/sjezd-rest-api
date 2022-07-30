@@ -1,17 +1,18 @@
 [package]
-name = "diesel_test1"
+name = "t1"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-diesel = { version = "1.4.4", features = ["postgres"] }
-dotenv = "0.15"
+rocket = "0.5.0-rc.2"
+diesel = { version="1.4.8", features=["postgres"]}
+rocket_sync_db_pools = { version="0.1.0-rc.2", default-features=false, features=["diesel_postgres_pool"]}
+dotenv = "0.15.0"
+figment = { version = "0.10", features = ["env"] }
 
-[[bin]]
-name = "show_usr"
-doc = false
+[dependencies.rocket_dyn_templates]
+version = "0.1.0-rc.2"
+features = ["handlebars", "tera"]
 
-[lib]
-doc = false

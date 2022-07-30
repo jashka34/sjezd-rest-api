@@ -5,5 +5,6 @@ table! {
         created_at -> Timestamp,
         updated_at -> Timestamp,
         active -> Bool,
+        hash_psw -> Varchar,
     }
 }
