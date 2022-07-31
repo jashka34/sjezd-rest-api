@@ -1,21 +1,13 @@
-#[macro_use] extern crate rocket;
+// #[macro_use] extern crate rocket;
 #[macro_use] extern crate diesel;
 // extern crate rocket_dyn_templates;
 
 pub mod models;
 pub mod schema;
-pub mod config;
+pub mod routes;
 
-use rocket::{State, Config};
 use rocket::fairing::AdHoc;
-use rocket::serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
-#[serde(crate = "rocket::serde")]
-struct AppConfig {
-        key: String,
-        port: u16
-}
 
 use rocket::*;
 use rocket_dyn_templates::{Template, context};
@@ -33,10 +25,6 @@ fn index() -> Template {
         Template::render("index", context! { name: "Alexey" })
 }
 
-#[get("/")]
-fn read_config(rocket_config: &Config, app_config: &State<AppConfig>) -> String {
-        format!("{:#?}\n{:#?}", app_config, rocket_config)
-}
 
 #[launch]
 fn rocket() -> _ {
@@ -44,6 +32,7 @@ fn rocket() -> _ {
         // .attach(Db::fairing())
         .attach(Template::fairing())
         .mount("/", routes![index])
-        .mount("/config", routes![read_config]) 
-        .attach(AdHoc::config::<AppConfig>())
+        .mount("/config", routes![routes::config::read_config]) 
+        .mount("/api/", routes![ routes::usrs::get_all_users])
+        .attach(AdHoc::config::<routes::config::AppConfig>())
 }

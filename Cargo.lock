@@ -1389,6 +1389,7 @@ dependencies = [
  "rocket_codegen",
  "rocket_http",
  "serde",
+ "serde_json",
  "state",
  "tempfile",
  "time",
@@ -1601,6 +1602,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7bd3e3206899af3f8b12af284fafc038cc1dc2b41d1b89dd17297221c5d225de"
 
 [[package]]
+name = "sjezd-rest-api"
+version = "0.0.1"
+dependencies = [
+ "diesel",
+ "dotenv",
+ "rocket",
+ "rocket_dyn_templates",
+ "rocket_sync_db_pools",
+]
+
+[[package]]
 name = "slab"
 version = "0.4.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1673,18 +1685,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "t1"
-version = "0.1.0"
-dependencies = [
- "diesel",
- "dotenv",
- "figment",
- "rocket",
- "rocket_dyn_templates",
- "rocket_sync_db_pools",
 ]
 
 [[package]]
