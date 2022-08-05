@@ -3,8 +3,8 @@ use rocket::fairing::AdHoc;
 
 use rocket::serde::json::Json;
 // use crate::schema::usrs::{self, dsl::*};
-// use crate::models::usrs;
- use crate::schema::usrs;
+use crate::models::usrs::Usr;
+use crate::schema::usrs;
 
 use rocket_sync_db_pools::{database, diesel};
 use diesel::prelude::*;
@@ -27,9 +27,19 @@ pub async fn get_all_users(db: Db) -> Result<Json<Vec<Option<i32>>>> {
     Ok(Json(ids))
 }
 
+#[get("/user/<id>")]
+pub async fn get_user(db: Db, id: i32) -> Option<Json<Usr>> {
+    println!("get_user id={}", id);
+    db.run(move |conn| {
+        usrs::table
+            .filter(usrs::id.eq(id))
+            .first(conn)
+    }).await.map(Json).ok()
+}
+
 pub fn stage() -> AdHoc {
-            AdHoc::on_ignite("Diesel Usrs Stage", |rocket| async {
-                        rocket.attach(Db::fairing())
-                              .mount("/api", routes![get_all_users]) 
-            })
+    AdHoc::on_ignite("Diesel Usrs Stage", |rocket| async {
+        rocket.attach(Db::fairing())
+              .mount("/api", routes![get_all_users, get_user]) 
+    })
 }
