@@ -1,10 +1,10 @@
 table! {
     usrs (id) {
-        id -> Int4,
-        name -> Varchar,
+        id -> Nullable<Integer>,
+        name -> Text,
         created_at -> Timestamp,
         updated_at -> Timestamp,
         active -> Bool,
-        hash_psw -> Varchar,
+        hash_psw -> Text,
     }
 }

@@ -1,9 +1,12 @@
 use std::time::SystemTime;
 use crate::schema::usrs;
+use rocket::serde::{Serialize, Deserialize};
 
-#[derive(Queryable)]
+#[derive(Debug, Clone, Deserialize, Serialize, Queryable, Insertable)]
+#[serde(crate = "rocket::serde")]
 pub struct Usr {
-    pub id : i32,
+    #[serde(skip_deserializing)]
+    pub id : Option<i32>,
     pub name : String,
     pub created_at : SystemTime,
     pub updated_at : SystemTime,
