@@ -1,17 +1,20 @@
-use std::time::SystemTime;
+// use chrono::prelude::*;
 use crate::schema::usrs;
 use rocket::serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone, Deserialize, Serialize, Queryable, Insertable)]
+#[derive(Debug, Clone, Deserialize, Serialize, Queryable)]
 #[serde(crate = "rocket::serde")]
 pub struct Usr {
-    #[serde(skip_deserializing)]
     pub id : Option<i32>,
     pub name : String,
-    pub created_at : SystemTime,
-    pub updated_at : SystemTime,
+//    #[serde(skip_serializing)]
+//    pub created_at : NaiveDateTime,
+//    #[serde(skip_serializing)]
+//    pub updated_at : NaiveDateTime,
     pub active : bool,
-    pub hash_psw: String,
+//    #[serde(skip_deserializing)]
+//    #[serde(skip_serializing)]
+//    pub hash_psw: String,
 }
 
 #[derive(Insertable)]
