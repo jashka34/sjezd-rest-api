@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rocket = { version = "0.5.0-rc.2", features = ["json"]}
-diesel = { version="1.4.8", features=["postgres"]}
+diesel = { version="1.4.8", features=["postgres", "chrono"]}
 # rocket_sync_db_pools = { version="0.1.0-rc.2", features=["diesel_postgres_pool"]}
 # dotenv = "0.15.0"
 diesel_migrations = "1.3"
@@ -24,5 +24,5 @@ features = ["sqlx_postgres"]
 [dependencies.sqlx]
 version = "0.5.1"
 default-features = false
-features = ["macros", "migrate"]
+features = ["macros", "chrono"]
 

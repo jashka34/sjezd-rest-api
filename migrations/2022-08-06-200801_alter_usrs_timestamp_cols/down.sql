@@ -1,0 +1,3 @@
+-- This file should undo anything in `up.sql`
+ALTER TABLE usrs ALTER COLUMN created_at TYPE TIMESTAMP WITHOUT TIME ZONE USING created_at AT TIME ZONE 'UTC';
+ALTER TABLE usrs ALTER COLUMN updated_at TYPE TIMESTAMP WITHOUT TIME ZONE USING updated_at AT TIME ZONE 'UTC';

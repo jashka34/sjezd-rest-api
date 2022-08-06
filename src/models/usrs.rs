@@ -1,4 +1,4 @@
-// use chrono::prelude::*;
+use chrono::prelude::*;
 use crate::schema::usrs;
 use rocket::serde::{Serialize, Deserialize};
 
@@ -8,9 +8,9 @@ pub struct Usr {
     pub id : Option<i32>,
     pub name : String,
 //    #[serde(skip_serializing)]
-//    pub created_at : NaiveDateTime,
+    pub created_at : DateTime<chrono::Utc>,
 //    #[serde(skip_serializing)]
-//    pub updated_at : NaiveDateTime,
+    pub updated_at : DateTime<chrono::Utc>,
     pub active : bool,
 //    #[serde(skip_deserializing)]
 //    #[serde(skip_serializing)]

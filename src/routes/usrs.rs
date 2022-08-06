@@ -28,13 +28,14 @@ pub async fn get_all_users(mut db: Connection<Db>) -> Result<Json<Vec<i32>>> {
 
 #[get("/user/<id>")]
 pub async fn get_user(mut db: Connection<Db>, id: i32) -> Option<Json<Usr>> {
-        sqlx::query!("SELECT id, name, active FROM usrs WHERE id = $1", id)
+    // dbg!("asdfasdf");
+    sqlx::query!("SELECT id, name, active, created_at, updated_at FROM usrs WHERE id = $1", id)
         .fetch_one(&mut *db)
         .map_ok(|r| Json(Usr {   id:         Some(r.id)
                                , name:       r.name
                                , active:     r.active
-                               // , created_at: r.created_at
-                               // , updated_at: r.updated_at
+                               , created_at: r.created_at
+                               , updated_at: r.updated_at
                             }))
         .await
         .ok()
