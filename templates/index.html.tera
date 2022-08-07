@@ -1,0 +1,13 @@
+{% extends "base" %}
+
+{% block content %}
+
+<h1>Hi {{ name }} there!</h1>
+<br>
+
+<a href="api/users/">API Users</a>
+<a href="config">Config</a>
+
+
+
+{% endblock content %}

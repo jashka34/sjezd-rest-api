@@ -1,10 +1,9 @@
 table! {
     usrs (id) {
         id -> Int4,
-        name -> Varchar,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
+        name -> Text,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
         active -> Bool,
-        hash_psw -> Varchar,
     }
 }

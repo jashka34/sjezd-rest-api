@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sjezd Demo</title>
+  </head>
+<body>
+  {% include "nav" %}
+
+  {% block content %}{% endblock content %}
+
+  <footer>
+    <a href="/">Home</a>
+  </footer>
+</body>
+</html>
+

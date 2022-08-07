@@ -1,6 +1,7 @@
 [default]
 template_dir = "templates"
 key = "def key"
+# db = { url = "postgres://postgres:postgres@192.168.212.44/disel_test1" }
 
 [debug]
 address = "127.0.0.1"
@@ -8,6 +9,7 @@ port = 8000
 workers = 1
 keep_alive = 0
 log_level = "normal"
+databases = { db = { url = "postgres://postgres:postgres@192.168.212.44/disel_test1" } }
 
 [release]
 address = "127.0.0.1"
@@ -15,6 +17,12 @@ port = 8000
 workers = 10
 keep_alive = 5
 log_level = "critical"
+
+#[debug.databases.db]
+# url = "postgres://postgres:postgres@192.168.212.44/disel_test1"
+
+#[default.databases.db]
+#url = "postgres://postgres:postgres@192.168.212.44/disel_test1"
 
 #[global.databases]
 #db = { url = "postgres://postgres:postgres@192.168.212.44/disel_test1" }
