@@ -1,13 +1,13 @@
 use rocket::{/*Rocket,Build, */ futures};
 use rocket::fairing::{self, AdHoc};
-// use rocket::response::status::Created;
+use rocket::response::status::Created;
 use rocket::serde::{Serialize, Deserialize, json::Json};
 use rocket_db_pools::{sqlx, Connection, Database};
 use rocket::http::Status;
 
 use futures::{stream::TryStreamExt, future::TryFutureExt};
 
-use crate::models::usrs::Usr;
+use crate::models::usrs::{Usr, NewUsr};
 use crate::db::connection::MyDb as Db;
 // use crate::schema::usrs;
 
@@ -33,27 +33,35 @@ pub async fn get_all_users(db: Connection<Db>) -> Result<Json<Vec<Usr>>, Status>
         Ok(users) => Ok(Json(users)),
         _ => Err(Status::NotFound),
     }
-
 }
 
 #[get("/user/<id>")]
-pub async fn get_user(mut db: Connection<Db>, id: i32) -> Option<Json<Usr>> {
+pub async fn get_user(db: Connection<Db>, id: i32) -> Result<Json<Usr>, Status> {
     // dbg!("asdfasdf");
-    sqlx::query!("SELECT id, name, active, created_at, updated_at FROM usrs WHERE id = $1", id)
-        .fetch_one(&mut *db)
-        .map_ok(|r| Json(Usr {   id:         r.id
-                               , name:       r.name
-                               , active:     r.active
-                               , created_at: r.created_at
-                               , updated_at: r.updated_at
-                            }))
-        .await
-        .ok()
+    let user = Usr::get_user_by_id(db, id).await;
+    match user {
+        Ok(user) => Ok(Json(user)),
+        _ => Err(Status::NotFound),
+    }
+}
+
+#[post("/user/add", format = "application/json", data = "<request>")]
+pub async fn add_user(db: Connection<Db>, request: Json<NewUsr>) -> Result<Created<Json<Usr>>, Status> {
+    let usr = Usr::add(db, request.name.to_owned()).await;
+    match usr {
+        Ok(usr) => Ok(Created::new("/").body(Json(usr))),
+        _ => Err(Status::BadRequest),
+    }
 }
 
 pub fn stage() -> AdHoc {
     AdHoc::on_ignite("Diesel Usrs Stage", |rocket| async {
         rocket.attach(Db::init())
-              .mount("/api", routes![get_all_users_ids, get_all_users, get_user]) 
+              .mount("/api", routes![get_all_users_ids, 
+                                     get_all_users, 
+                                     get_user,
+                                     add_user,
+                                    ]
+              ) 
     })
 }
